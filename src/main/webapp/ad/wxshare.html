@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>demo.html</title>
+
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+</head>
+
+<body>
+<!-- Freemarker需要安全输出，页面如果存在NULL 会报错 -->
+<h1>${(helloworld)!''}</h1> <br>
+<!--<h2>${(username)!}</h2>-->
+<img src="${contextPath}/wximages/1a6beab1-de25-3e16-80b1-d01df729dc44.jpeg">
+</body>
+</html>

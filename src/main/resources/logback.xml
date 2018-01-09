@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="60 seconds">
+
+    <contextName>weixin</contextName>
+    <property scope="context" name="pattern-info" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] [%contextName] %c{10} [%F - %M : %L] %m%n"/>
+    <property scope="context" name="file-path-log" value="logs/tbp-log.log"/>
+    <property scope="context" name="file-path-err" value="logs/tbp-error.log"/>
+    <property scope="context" name="file-path-log-pattern" value="logs/tbp-log-%d{yyyy-MM-dd}.%i.log"/>
+    <property scope="context" name="file-path-err-pattern" value="logs/tbp-error-%d{yyyy-MM-dd}.%i.log"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>${pattern-info}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <appender name="D" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Append>true</Append>
+        <File>${file-path-log}</File>
+        <encoder>
+            <pattern>${pattern-info}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${file-path-log-pattern}</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="E" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Append>true</Append>
+        <File>${file-path-err}</File>
+        <encoder>
+            <pattern>${pattern-info}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${file-path-err-pattern}</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="druid.sql" level="INFO"/>
+    <logger name="com.weixin" level="INFO"/>
+    <logger name="com.javen" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="D"/>
+        <appender-ref ref="E"/>
+    </root>
+</configuration>
